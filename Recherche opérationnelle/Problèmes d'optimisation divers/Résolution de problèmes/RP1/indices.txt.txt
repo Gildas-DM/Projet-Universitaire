@@ -1,0 +1,47 @@
+Exercice 1
+
+-   Pas de difficultés particulières, on doit trouver une seule
+    solution.
+
+Exercice 2
+
+-   Utiliser la modélisation avec les retenues (plus efficace que la
+    décomposition des nombres en chiffres).
+-   Domaine des retenues : {0,1,2,3} (4 nombres sont additionnés).
+-   Ne pas oublier que la contrainte alldiff ne porte que sur les
+    lettres sans prendre en compte les retenues,
+    c.-à-d. addConstraint(AllDifferentConstraint(), “iesoulmtn”).
+-   Pour avoir la valeur maximale, simplement énumérer l’ensemble des
+    solutions et prendre celle dont l’évaluation est la plus grande.
+
+Exercice 3
+
+-   Les décisions à prendre sont le retournement des 3 lignes (l1, l2,
+    l3), 3 colonnes (c1, c2, c3) et 2 diagonales (d1, d2), donc 8
+    décisions dont le domaine est {0,1} (opérer deux fois un même coup
+    s’annule).
+-   Pour chaque jeton, on indique les décisions possibles pour qu’il
+    soit bien en position noire à la fin. Par exemple, pour Amel, pour
+    le jeton en haut à gauche, il faut que l1 + c1 + d1 soit égal à 0 ou
+    à 2. Pour le jeton au milieu, il faut que l2 + c2 + d1 + d2 soit
+    égal à 1 ou 3, etc. Pour modéliser ces contraintes, voir dans le
+    début du TME la documentation (limitation des valeurs prises par une
+    expression).
+-   On doit trouver 2 solutions possibles pour Amel (en 4 coups) et
+    aucune solution pour Sofia.
+
+Exercice 4
+
+-   Pas de difficultés particulières, on trouve [{‘a’: 1, ‘b’: 1, ‘c’:
+    6, ‘d’: 7, ‘e’: 7, ‘f’: 1, ‘g’: 1}], c’est donc 173 * 11677 =
+    2020121.
+
+Exercice 5
+
+-   Bien borner les valeurs possibles de chacune des 4 variables, sinon
+    cela peut être un peu long.
+-   On doit trouver 27 A, 2 B, 16 C, 2 D pour une évaluation de 730.
+
+Exercice 6
+
+-   Pas de nouvelles difficultés.

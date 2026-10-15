@@ -1,0 +1,193 @@
+\documentclass[11pt,letterpaper]{article}
+
+% ============================================
+% PACKAGES
+% ============================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+
+% ============================================
+% PAGE SETUP
+% ============================================
+\geometry{
+    top=2cm,
+    bottom=2cm,
+    left=2.5cm,
+    right=2.5cm
+}
+
+% ============================================
+% HEADER AND FOOTER
+% ============================================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{\coursename}}
+\rhead{\textbf{\studentname}}
+\cfoot{Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% ============================================
+% HOMEWORK INFO (EDIT THESE)
+% ============================================
+\newcommand{\coursename}{MOGPL}
+\newcommand{\studentname}{Bruno Fernandes Iorio \& Gildas De Michiel}
+
+% ============================================
+% CUSTOM ENVIRONMENTS
+% ============================================
+
+% Problem environment
+\newcounter{problemcounter}
+\newenvironment{problem}[1][]{%
+    \refstepcounter{problemcounter}%
+    \par\vspace{1em}%
+    \noindent\textbf{Problem \theproblemcounter\ifx&#1&\else: #1\fi}%
+    \par\vspace{0.5em}%
+}{\par\vspace{1em}}
+
+% Solution environment
+\newenvironment{solution}{%
+    \par\vspace{0.5em}%
+    \noindent\textit{Solution:}%
+    \par\vspace{0.3em}%
+}{\par\vspace{1em}}
+
+% Boxed solution for final answers
+\newtcolorbox{answerbox}{
+    colback=blue!5!white,
+    colframe=blue!50!black,
+    boxrule=0.5pt,
+    arc=2pt,
+    left=5pt,
+    right=5pt,
+    top=5pt,
+    bottom=5pt
+}
+
+% ============================================
+% MATH SHORTCUTS
+% ============================================
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\der}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
+
+% ============================================
+% DOCUMENT
+% ============================================
+\begin{document}
+
+% ============================================
+% TITLE SECTION
+% ============================================
+\begin{center}
+    {\Large\textbf{\coursename}}\\[0.3em]
+    \begin{tabular}{rl}
+        \textbf{Name:} & \studentname \\
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{1em}
+
+% ============================================
+% PROBLEMS
+% ============================================
+\noindent
+\textbf{(a)} 
+Soit $G$ l'ensemble de sommets de la grille $N$ x $M$ et $O \subset G$ l'ensemble des sommets obstacles. Pour chaque point $(x,y) \in G$ et chaque direction $dir$, on considère le sommet $(x,y,dir)$, en n'indiquant qu'au point $(x,y)$, on fait face à la direction $dir$. La commande avance($k$) est représentée par l'arc orienté entre deux sommets ayant la même direction et une distance $k\in\{1,2,3\}$. 
+La commande tourne est représentée par l'arc 
+orienté entre deux sommets ayant les mêmes coordonnées $x, y$, mais ayant des directions différentes.
+
+Soit $E$ l'ensemble des arcs du graphe. Pour que chaque commande ait un coût unitaire, on définit l'ensemble des arcs sortants  suivants pour chaque $(x,y) \notin O$:
+\begin{itemize}
+  \item $(x,y,sud) \longrightarrow  \{(x,y,ouest), (x,y,est)\} \cup \{(x,y+i,sud) : i \in \{1,2,3\}, M > y+i \geq 0, (x, y+i) \notin O\}$
+  \item $(x,y,nord) \longrightarrow  \{(x,y,est), (x,y,ouest)\} \cup \{(x,y-i,nord) : i \in \{1,2,3\}, M > y-i \geq 0, (x, y-i) \notin O\}$
+  \item $(x,y,est) \longrightarrow  \{(x,y,sud), (x,y,nord)\} \cup \{(x+i,y,est) : i \in \{1,2,3\}, N > x+i \geq 0, (x+i, y) \notin O\}$
+  \item $(x,y,ouest) \longrightarrow  \{(x,y,nord), (x,y,sud)\} \cup \{(x-i,y,ouest) : i \in \{1,2,3\}, N > x-i \geq 0, (x-i, y) \notin O\}$
+\end{itemize}
+
+\noindent
+\textbf{(b)} On étudie la complexité de l'algorithme bfsSolver présent dans le fichier Solver.py. L'objectif de l'algorithme est de trouver le plus court chemin entre deux points. Pour ce faire, on examine les chemins possibles entre le point d'entrée et le point de d'arrivée. Chaque sommet $(x, y, dir)$ est inséré au plus une fois dans la file. Donc, on parcours $4\times N\times M$ sommet. De plus, chaque arête est explorée une seule fois. On en déduit que l'algorithme bfsSolver a une complexité en $O(4NM + E)$. Or l'ensembles des arcs dépend de la taille de la grille. Au final, la complexité de l'algorithme est $O(4NM + E) = O(4NM + O(NM)) = O(NM)$
+
+\noindent
+\textbf{(c)}
+Temps d'exécution moyens en fonction de la taille de la grille :
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Taille de la grille} & \textbf{Temps moyen (sec)} \\
+\hline
+$10 \times 10$ & 0.000897 \\
+\hline
+$20 \times 20$ & 0.010343 \\
+\hline
+$30 \times 30$ & 0.050940 \\
+\hline
+$40 \times 40$ & 0.222723 \\
+\hline
+$50 \times 50$ & 0.530197 \\
+\hline
+\end{tabular}
+\end{table}
+
+
+\noindent
+\textbf{(d)}
+Temps d'exécution moyens en fonction du nombre d'obstacles :
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Nombre d'obstacles} & \textbf{Temps moyen (sec)} \\
+\hline
+10 & 0.012374 \\
+\hline
+20 & 0.007275 \\
+\hline
+30 & 0.008942 \\
+\hline
+40 & 0.006518 \\
+\hline
+50 & 0.002126 \\
+\hline
+\end{tabular}
+\label{tab:temps_moyens_obstacles}
+\end{table}
+
+\noindent
+\textbf{(e)} Pour $i \in \{0, \ldots, M-1\}$ et $ j \in \{0, \ldots, N-1\}$, on définit les variables $w_{i,j}$ tel que $w_{i,j} \in \{0, \ldots, 1000\}$.
+\newline
+De plus, on définit les variables $x_{i,j}$ tel que $x_{i,j} = 1$ si il y a un obstacle présent à la position $(i, j)$ et $0$ sinon.
+
+Le problème énoncé peut être modélisé de la manière suivante: 
+
+$$\min{\sum_{i = 0}^{M - 1} \sum_{j = 0}^{N - 1} x_{i,j}w_{i,j}}$$
+$$\left\{
+\begin{array}{ll}
+\displaystyle \sum_{i=0}^{M-1} \sum_{j=0}^{N-1} x_{i,j} = P \\[15pt]
+\displaystyle \sum_{j=0}^{N-1} x_{i,j} \leq \frac{2P}{M} & \forall i \in \{0, \ldots, M-1\} \\[15pt]
+\displaystyle \sum_{i=0}^{M-1} x_{i,j} \leq \frac{2P}{N} & \forall j \in \{0, \ldots, N-1\} \\[15pt]
+x_{i,j} + x_{i,j+2} - x_{i,j+1} \leq 1 & \forall i \in \{0, \ldots, M-1\}, \; \forall j \in \{0, \ldots, N-3\} \\[15pt]
+x_{i,j} + x_{i+2,j} - x_{i+1,j} \leq 1 & \forall i \in \{0, \ldots, M-3\}, \; \forall j \in \{0, \ldots, N-1\} \\[15pt]
+x_{i,j} \in \{0,1\}
+\end{array}
+\right.$$
+\end{document}
